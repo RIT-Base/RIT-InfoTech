@@ -1,4 +1,17 @@
-/* Add to the top of your CSS file */
+/* General body and font styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.main-wrapper {
+    max-width: 1000px; /* Adjust this value to your liking */
+    margin: 0 auto;
+}
+
 .start-screen {
     position: fixed;
     top: 0;
@@ -15,88 +28,95 @@
     z-index: 2000;
     transition: opacity 0.5s ease-in-out;
 }
-
-.start-screen h1 {
-    font-size: 3rem;
-}
-
-.start-screen p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-
+.start-screen h1 { font-size: 3rem; }
+.start-screen p { font-size: 1.2rem; margin-bottom: 20px; }
 .start-btn {
-    padding: 15px 30px;
-    font-size: 1.5rem;
-    border: 2px solid #fff;
-    background-color: transparent;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 50px;
-    transition: background-color 0.3s, color 0.3s;
+    padding: 15px 30px; font-size: 1.5rem; border: 2px solid #fff; background-color: transparent;
+    color: #fff; cursor: pointer; border-radius: 50px; transition: background-color 0.3s, color 0.3s;
 }
-
-.start-btn:hover {
-    background-color: #fff;
-    color: #1a1a1a;
-}
-
-/* This will be the class to hide the main content */
-.hidden {
-    display: none;
-}
-
-/* Add an animation for the main content to fade in */
+.start-btn:hover { background-color: #fff; color: #1a1a1a; }
+.hidden { display: none; }
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-body {
-    font-family: sans-serif;
-    margin: 0;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+/* Main Content Layout */
+.main-header {
+    background-color: #fff;
+    padding: 40px 20px 15px;
+    text-align: left;
+}
+.header-title { font-size: 2.5rem; margin: 0; }
+.header-subtitle { font-size: 1.2rem; color: #666; }
+
+.header-image-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
 }
 
-header, main, nav {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+.header-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-nav {
+.nav-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    background-color: #fff;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: sticky; /* Make the nav bar sticky */
-    top: 0;
-    z-index: 1000;
+    transform: translateY(-50%); /* This creates the overlap effect */
+    position: relative;
+    z-index: 10; /* Ensure navigation is on top of the image */
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .nav-btn {
-    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px; /* Square shape */
+    height: 120px; /* Square shape */
     border: none;
-    background-color: #ddd;
+    background-color: #fff;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    margin: 0 10px;
+}
+
+.nav-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 .nav-btn.active {
     background-color: #007bff;
     color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
-.nav-btn:hover:not(.active) {
-    background-color: #bbb;
+.nav-btn i {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
 }
 
-/* This is the core CSS for show/hide functionality */
+.nav-btn span {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.content-wrapper {
+    max-width: 900px;
+    margin: -60px auto 20px; /* Adjust margin to pull content up */
+    padding: 20px;
+}
+
 .content-section {
     display: none;
     animation: fadeIn 0.5s ease-in-out;
@@ -104,37 +124,66 @@ nav {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-top: 20px;
 }
 
 .content-section.visible {
     display: block;
 }
 
-/* Optional: Fade-in animation for a smoother transition */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Keyframes for the fade animation */
+@keyframes imageFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px 0;
-    border-radius: 8px;
+.header-image-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    nav {
-        flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 10px 5px;
-        gap: 5px;
+.header-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Transition for a smooth fade */
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Add this new class to the image when it's loading a new source */
+.header-image.is-loading {
+    opacity: 0;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-wrap: wrap; /* Allows buttons to wrap to the next line */
+        justify-content: center; /* Centers the buttons */
+        transform: translateY(-50%); /* Reintroduces the overlap effect */
+        margin-top: 0;
+        padding: 0 10px;
+        position: relative;
+        z-index: 10;
     }
     .nav-btn {
-        padding: 8px 10px;
-        font-size: 0.9rem;
+        width: 50px;
+        height: 50px;
+        margin: 5px;
     }
+    .nav-btn span {
+        font-size: 0.4rem;
+    }
+    .nav-btn i {
+        font-size: 1rem;
+    }
+    .content-wrapper {
+        margin-top: -60px; /* Adjust margin to pull content up */
+    }
+    .main-header {
+        padding-top: 20px;
+    }
+    .header-title { font-size: 1rem; margin: 0; }
+    .header-subtitle { font-size: 0.8rem; color: #666; }
 }

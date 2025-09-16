@@ -22,6 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all navigation buttons and all content sections
     const navButtons = document.querySelectorAll('.nav-btn');
     const contentSections = document.querySelectorAll('.content-section');
+    const headerImage = document.getElementById('header-image');
+
+    // Define the image paths for each section
+    const imagePaths = {
+        'home': 'img/test-image.webp',
+        'outreach': 'img/img2.webp',
+        'marketing': 'img/img3.webp',
+        'finance': 'img/img4.webp',
+        'technology': 'img/img5.webp'
+    };
 
     // Function to handle the tab switching
     const switchSection = (targetSectionId) => {
@@ -35,6 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetSection) {
             targetSection.classList.add('visible');
         }
+
+         // Start fade-out effect
+        headerImage.classList.add('is-loading');
+
+        // Change the header image source after a slight delay
+        setTimeout(() => {
+            headerImage.src = imagePaths[targetSectionId];
+            // Remove the loading class to trigger the fade-in
+            headerImage.classList.remove('is-loading');
+        }, 300);
     };
 
     // Add a click event listener to each navigation button

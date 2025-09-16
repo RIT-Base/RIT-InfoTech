@@ -3,55 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Org's Divisions</title>
+    <title>RIT InfoTech</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <section id="start-screen" class="start-screen visible">
-        <h1>Welcome to RIT InfoTech!</h1>
+        <h1>Welcome to RIT!</h1>
         <p>A new adventure awaits. Discover your place.</p>
         <button id="start-btn" class="start-btn">Press Start</button>
     </section>
+    <div class="main-wrapper">
+        <div id="main-content" class="hidden">
+            <header class="main-header">
+                <h1 class="header-title">Republic of Information Technology</h1>
+                <p class="header-subtitle">Explore what we do and find your place.</p>
+            </header>
+            
+            <div class="header-image-container">
+                <img src="img/test-image.webp" alt="A team working together on a project" class="header-image" id="header-image">
+            </div>
 
-    <div id="main-content" class="hidden">
-        <header>
-            <h1>Republic of Information Technology</h1>
-            <p>Explore what we do and find your place.</p>
-        </header>
+            <nav class="nav-container">
+                <button class="nav-btn active" data-section="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </button>
+                <button class="nav-btn" data-section="outreach">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Outreach</span>
+                </button>
+                <button class="nav-btn" data-section="marketing">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Marketing</span>
+                </button>
+                <button class="nav-btn" data-section="finance">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Finance</span>
+                </button>
+                <button class="nav-btn" data-section="technology">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Technology</span>
+                </button>
+            </nav>
 
-        <nav>
-            <button class="nav-btn active" data-section="home">Home</button>
-            <button class="nav-btn" data-section="outreach">Outreach</button>
-            <button class="nav-btn" data-section="marketing">Marketing</button>
-            <button class="nav-btn" data-section="finance">Finance</button>
-        </nav>
+            <main class="content-wrapper">
+                <section id="home" class="content-section visible">
+                    <h2>Welcome to our Organization!</h2>
+                    <p>We are a community dedicated to [Your Org's Mission]. Click a button above to learn about our divisions.</p>
+                </section>
 
-        <main>
-            <section id="home" class="content-section visible">
-                <h2>Welcome to our Organization!</h2>
-                <p>We are a community dedicated to [Your Org's Mission]. Click a button above to learn about our divisions.</p>
-                <img src="img/home-image.jpg" alt="A team working together">
-            </section>
+                <section id="outreach" class="content-section">
+                    <h2>Outreach Division</h2>
+                    <p>We are the face of our organization, connecting with the community and forging new partnerships.</p>
+                </section>
 
-            <section id="outreach" class="content-section">
-                <h2>Outreach Division</h2>
-                <p>We are the face of our organization, connecting with the community and forging new partnerships.</p>
-                <img src="img/outreach-image.jpg" alt="People at a community event">
-            </section>
+                <section id="marketing" class="content-section">
+                    <h2>Marketing Division</h2>
+                    <p>From social media campaigns to flyers, we tell our story and attract new members.</p>
+                </section>
 
-            <section id="marketing" class="content-section">
-                <h2>Marketing Division</h2>
-                <p>From social media campaigns to flyers, we tell our story and attract new members.</p>
-                <img src="img/marketing-image.jpg" alt="A person working on a marketing campaign">
-            </section>
-
-            <section id="finance" class="content-section">
-                <h2>Finance Division</h2>
-                <p>We are responsible for managing the organization's funds, ensuring our projects are well-supported and sustainable.</p>
-                <img src="img/finance-image.jpg" alt="A calculator on a desk">
-            </section>
-        </main>
+                <section id="finance" class="content-section">
+                    <h2>Finance Division</h2>
+                    <p>We are responsible for managing the organization's funds, ensuring our projects are well-supported and sustainable.</p>
+                </section>
+                
+                <section id="technology" class="content-section">
+                    <h2>Technology Division</h2>
+                    <p>We build and maintain the digital infrastructure that powers our organization and its projects.</p>
+                </section>
+            </main>
+        </div>
     </div>
 
     <script src="js/script.js"></script>
