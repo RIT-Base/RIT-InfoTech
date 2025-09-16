@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add the new section to the content wrapper
                 contentWrapper.appendChild(newSection);
 
-                newSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                newSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             })
             .catch(error => {
                 console.error('Error loading section:', error);

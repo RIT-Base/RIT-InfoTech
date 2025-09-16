@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const mainContent = document.getElementById('main-content');
+    const footer = document.querySelector('footer');
 
     // Add a click event listener to the start button
     startBtn.addEventListener('click', () => {
         // Hide the start screen with a fade-out effect
         startScreen.style.opacity = '0';
         
-        // Use a timeout to remove the element after the animation finishes
         setTimeout(() => {
             startScreen.classList.remove('visible');
             startScreen.style.display = 'none'; // Ensure it's fully gone
@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show the main content and trigger the fade-in animation
             mainContent.classList.remove('hidden');
             mainContent.style.animation = 'fadeIn 1s forwards';
+
+            footer.classList.remove('footer-hidden');
+
         }, 500); // This should match the CSS transition duration
     });
     // Get all navigation buttons and all content sections

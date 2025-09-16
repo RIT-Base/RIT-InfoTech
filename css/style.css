@@ -146,10 +146,28 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-top: 30px;
+    text-align: justify;
 }
 
 .content-section.visible {
     display: block;
+}
+
+/* Add this to hide the footer initially */
+.footer-hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* Make sure the footer itself has a transition for a smooth fade-in */
+footer {
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    text-align: left;
+    position: relative;
+    line-height: 0.5;
+    font-size: 0.6rem;
+    transition: opacity 1s ease-in-out, display 1s; /* Add a fade-in transition */
 }
 
 /* Responsive adjustments for smaller screens */
