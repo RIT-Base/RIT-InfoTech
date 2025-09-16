@@ -179,7 +179,7 @@ body {
     .main-header {
         padding-top: 20px;
     }
-    .header-title { font-size: 1rem; margin: 0; }
+    .header-title { font-size: 1rem; margin: 0; line-height: inherit; }
     .header-subtitle { font-size: 0.8rem; color: #666; }
     .start-screen h1 { font-size: 2rem; line-height: 0; } .start-screen p { font-size: 0.8rem;} .start-btn { font-size: 1rem;}
 }
