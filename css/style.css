@@ -1,10 +1,22 @@
-/* General body and font styles */
+/*Override*/
+:root {
+    --bg-color: #121212;
+    --primary-color: #1e1e1e;
+    --secondary-color: #2a2a2a;
+    --accent-color: #05d7e5;
+    --text-color: #e0e0e0;
+    --header-color: #ffffff;
+    --border-color: #333333;
+    --table-header-bg: #2a2a2a;
+    --table-row-hover: #252525;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     line-height: 1.6;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--bg-color);
+    color: #fff;
 }
 
 .main-wrapper {
@@ -28,7 +40,7 @@ body {
     z-index: 2000;
     transition: opacity 0.5s ease-in-out;
 }
-.start-screen h1 { font-size: 3rem; }
+.start-screen h1 { font-size: 3rem; line-height: 0; }
 .start-screen p { font-size: 1.2rem; margin-bottom: 20px; }
 .start-btn {
     padding: 15px 30px; font-size: 1.5rem; border: 2px solid #fff; background-color: transparent;
@@ -36,6 +48,7 @@ body {
 }
 .start-btn:hover { background-color: #fff; color: #1a1a1a; }
 .hidden { display: none; }
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -43,30 +56,37 @@ body {
 
 /* Main Content Layout */
 .main-header {
-    background-color: #fff;
+    background-color: var(--bg-color);
     padding: 40px 20px 15px;
     text-align: left;
 }
-.header-title { font-size: 2.5rem; margin: 0; }
-.header-subtitle { font-size: 1.2rem; color: #666; }
+.header-title { font-size: 2.5rem; margin: 0; padding-left: 20px; line-height: 0.8; }
+.header-subtitle { font-size: 1.2rem; color: #fff; padding-left: 20px; }
 
 .header-image-container {
     position: relative;
     width: 100%;
-    height: 300px; /* Adjust height as needed */
+    height: 400px; /* Adjust height as needed */
     overflow: hidden;
+    border-radius: 20px;
 }
 
 .header-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: opacity 0.1s ease-in-out;
+}
+
+/* Add this new class to the image when it's loading a new source */
+.header-image.is-loading {
+    opacity: 0;
 }
 
 .nav-container {
     display: flex;
     justify-content: center;
-    transform: translateY(-50%); /* This creates the overlap effect */
+    transform: translateY(-50%); /* Overlap */
     position: relative;
     z-index: 10; /* Ensure navigation is on top of the image */
     max-width: 900px;
@@ -78,8 +98,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 120px; /* Square shape */
-    height: 120px; /* Square shape */
+    width: 80px; /* Square shape */
+    height: 80px; /* Square shape */
     border: none;
     background-color: #fff;
     cursor: pointer;
@@ -95,19 +115,19 @@ body {
 }
 
 .nav-btn.active {
-    background-color: #007bff;
+    background-color: var(--accent-color);
     color: #fff;
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
 .nav-btn i {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     margin-bottom: 5px;
 }
 
 .nav-btn span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: bold;
 }
 
@@ -121,39 +141,14 @@ body {
     display: none;
     animation: fadeIn 0.5s ease-in-out;
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--primary-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 10px;
 }
 
 .content-section.visible {
     display: block;
-}
-
-/* Keyframes for the fade animation */
-@keyframes imageFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.header-image-container {
-    position: relative;
-    width: 100%;
-    height: 300px; /* Adjust height as needed */
-    overflow: hidden;
-}
-
-.header-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Transition for a smooth fade */
-    transition: opacity 0.5s ease-in-out;
-}
-
-/* Add this new class to the image when it's loading a new source */
-.header-image.is-loading {
-    opacity: 0;
 }
 
 /* Responsive adjustments for smaller screens */
@@ -186,4 +181,5 @@ body {
     }
     .header-title { font-size: 1rem; margin: 0; }
     .header-subtitle { font-size: 0.8rem; color: #666; }
+    .start-screen h1 { font-size: 2rem; line-height: 0; } .start-screen p { font-size: 0.8rem;} .start-btn { font-size: 1rem;}
 }

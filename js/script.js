@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headerImage.src = imagePaths[targetSectionId];
             // Remove the loading class to trigger the fade-in
             headerImage.classList.remove('is-loading');
-        }, 300);
+        }, 100);
     };
 
     // Add a click event listener to each navigation button
