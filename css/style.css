@@ -159,6 +159,8 @@ body {
     opacity: 0;
 }
 
+footer a { text-decoration: none; font-weight: 900; color: #fff;}
+
 /* Make sure the footer itself has a transition for a smooth fade-in */
 footer {
     background-color: var(--primary-color);
