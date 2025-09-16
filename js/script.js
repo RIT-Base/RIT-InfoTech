@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define the image paths for each section
     const imagePaths = {
         'home': 'img/test-image.webp',
-        'outreach': 'img/img2.webp',
-        'marketing': 'img/img3.webp',
-        'finance': 'img/img4.webp',
-        'technology': 'img/img5.webp'
+        'webdev': 'img/img2.webp',
+        'gamedev': 'img/img3.webp',
+        'iot': 'img/img4.webp',
+        'cysec': 'img/img5.webp'
     };
 
     // Function to handle the tab switching
