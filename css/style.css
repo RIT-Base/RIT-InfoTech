@@ -204,3 +204,56 @@ footer {
     .header-subtitle { font-size: 0.8rem; color: #666; }
     .start-screen h1 { font-size: 2rem; line-height: 0; } .start-screen p { font-size: 0.8rem;} .start-btn { font-size: 1rem;}
 }
+
+/* WebDev Content Section */
+/* Add this to your style.css file */
+
+.code-editor-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.code-panel,
+.preview-panel {
+    flex: 1; /* Makes both panels take up equal width */
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+#code-input {
+    width: 100%;
+    height: 300px;
+    resize: vertical;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.run-btn {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+.code-editor-container {
+    color: #121212;
+    border: 1px solid #ddd;
+    height: 100%;
+    padding: 10px;
+    overflow-y: auto;
+}
