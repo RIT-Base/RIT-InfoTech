@@ -172,39 +172,6 @@ footer {
     transition: opacity 1s ease-in-out, display 1s; /* Add a fade-in transition */
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .nav-container {
-        flex-wrap: wrap; /* Allows buttons to wrap to the next line */
-        justify-content: center; /* Centers the buttons */
-        transform: translateY(-50%); /* Reintroduces the overlap effect */
-        margin-top: 0;
-        padding: 0 10px;
-        position: relative;
-        z-index: 10;
-    }
-    .nav-btn {
-        width: 50px;
-        height: 50px;
-        margin: 5px;
-    }
-    .nav-btn span {
-        font-size: 0.4rem;
-    }
-    .nav-btn i {
-        font-size: 1rem;
-    }
-    .content-wrapper {
-        margin-top: -60px; /* Adjust margin to pull content up */
-    }
-    .main-header {
-        padding-top: 20px;
-    }
-    .header-title { font-size: 1rem; margin: 0; line-height: inherit; }
-    .header-subtitle { font-size: 0.8rem; color: #666; }
-    .start-screen h1 { font-size: 2rem; line-height: 0; } .start-screen p { font-size: 0.8rem;} .start-btn { font-size: 1rem;}
-}
-
 /* WebDev Content Section */
 /* Add this to your style.css file */
 
@@ -257,3 +224,46 @@ footer {
     padding: 10px;
     overflow-y: auto;
 }
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-wrap: wrap; /* Allows buttons to wrap to the next line */
+        justify-content: center; /* Centers the buttons */
+        transform: translateY(-50%); /* Reintroduces the overlap effect */
+        margin-top: 0;
+        padding: 0 10px;
+        position: relative;
+        z-index: 10;
+    }
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+    }
+    .nav-btn span {
+        font-size: 0.4rem;
+    }
+    .nav-btn i {
+        font-size: 1rem;
+    }
+    .content-wrapper {
+        margin-top: -60px; /* Adjust margin to pull content up */
+    }
+    .main-header {
+        padding-top: 20px;
+    }
+    .header-title { font-size: 1rem; margin: 0; line-height: inherit; }
+    .header-subtitle { font-size: 0.8rem; color: #666; }
+    .start-screen h1 { font-size: 2rem; line-height: 0; } .start-screen p { font-size: 0.8rem;} .start-btn { font-size: 1rem;}
+
+    .code-editor-container {
+    flex-direction: column; /* Stacks the panels vertically on mobile */
+    }
+
+    .code-panel,
+    .preview-panel {
+    width: 85%; /* Makes each panel take up the full width */
+    }
+}
+
