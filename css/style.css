@@ -225,6 +225,121 @@ footer {
     overflow-y: auto;
 }
 
+/* GameDev */
+#gamedev {
+    text-align: center;
+}
+
+#gameCanvas {
+    display: block;
+    margin: 10px auto;
+    background: #f0f0f0;
+    border: 2px solid #333;
+    max-width: 100%;
+    height: auto;
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.game-controls button, #jumpBtn {
+    padding: 10px;
+}
+
+/* IoT */
+#iot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 20px;
+  position: relative;
+}
+
+.iot-board {
+  position: relative;
+  display: inline-block;
+}
+
+.board-box {
+  width: 220px;
+  height: 120px;
+  border: 2px solid #444;
+  border-radius: 10px;
+  background: #222;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.led {
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: gray;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: background 0.3s, box-shadow 0.3s;
+  z-index: 2;
+}
+
+.iot-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.iot-btn {
+  padding: 10px 15px;
+  border: none;
+  background: #444;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+}
+
+.iot-btn:hover {
+  background: #666;
+}
+
+/* Wires from buttons upward */
+.iot-btn::after {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background: #888;
+  transform: translateX(-50%);
+}
+
+/* Wire from board to LED */
+.iot-board::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  width: 30px;
+  height: 2px;
+  background: #888;
+  z-index: 1;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .nav-container {
@@ -264,6 +379,24 @@ footer {
     .code-panel,
     .preview-panel {
     width: 85%; /* Makes each panel take up the full width */
+    }
+
+    .game-controls {
+        flex-direction: column;
+    }
+
+     .board-box {
+    width: 160px;
+    height: 90px;
+    font-size: 0.9rem;
+    }
+    .led {
+        width: 20px;
+        height: 20px;
+        right: -40px;
+    }
+    .iot-btn {
+        padding: 8px 12px;
     }
 }
 
