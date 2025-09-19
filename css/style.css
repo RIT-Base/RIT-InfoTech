@@ -385,7 +385,7 @@ footer {
         flex-direction: column;
     }
 
-     .board-box {
+    .board-box {
     width: 160px;
     height: 90px;
     font-size: 0.9rem;
@@ -397,6 +397,19 @@ footer {
     }
     .iot-btn {
         padding: 8px 12px;
+    }
+
+    /*More mobile fix kkw*/
+    h2 {
+        font-size: 17px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    .header-image-container {
+        height: 60%;
     }
 }
 
