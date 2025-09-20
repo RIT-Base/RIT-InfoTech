@@ -54,15 +54,57 @@ body {
     to { opacity: 1; }
 }
 
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Main Content Layout */
 .main-header {
     background-color: var(--bg-color);
     padding: 40px 20px 15px;
     text-align: left;
     margin-top: 30px;
+    animation: fadeRight 1.5s ease-out forwards;
 }
-.header-title { font-size: 2.5rem; margin: 0; padding-left: 20px; line-height: 0.8; }
+.header-title { font-size: 2.5rem; margin: 0; line-height: 0.8; }
 .header-subtitle { font-size: 1.2rem; color: #fff; padding-left: 20px; }
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
 
 .header-image-container {
     position: relative;
@@ -70,6 +112,7 @@ body {
     height: 400px; /* Adjust height as needed */
     overflow: hidden;
     border-radius: 20px;
+    animation: fadeLeft 1.5s ease-out forwards;
 }
 
 .header-image {
@@ -136,6 +179,7 @@ body {
     max-width: 900px;
     margin: -60px auto 20px; /* Adjust margin to pull content up */
     padding: 20px;
+    animation: fadeUp 1.5s ease-out forwards;
 }
 
 .content-section {
@@ -153,7 +197,6 @@ body {
     display: block;
 }
 
-/* Add this to hide the footer initially */
 .footer-hidden {
     display: none;
     opacity: 0;
@@ -161,7 +204,6 @@ body {
 
 footer a { text-decoration: none; font-weight: 900; color: #fff;}
 
-/* Make sure the footer itself has a transition for a smooth fade-in */
 footer {
     background-color: var(--primary-color);
     padding: 1.5rem;
@@ -173,7 +215,6 @@ footer {
 }
 
 /* WebDev Content Section */
-/* Add this to your style.css file */
 
 .code-editor-container {
     display: flex;
@@ -226,9 +267,6 @@ footer {
 }
 
 /* GameDev */
-#gamedev {
-    text-align: center;
-}
 
 #gameCanvas {
     display: block;
@@ -400,16 +438,9 @@ footer {
     }
 
     /*More mobile fix kkw*/
-    h2 {
-        font-size: 17px;
-    }
-
-    p {
-        font-size: 12px;
-    }
-
-    .header-image-container {
-        height: 60%;
-    }
+    h2 { font-size: 17px; }
+    p { font-size: 12px; }
+    .header-image-container { height: 60%; }
+    .logo-title img { width: 40px; height: 40px; }
 }
 
