@@ -78,6 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     loadScript('js/iot.js');
                 } else if (sectionName === 'cysec') {
                     loadScript('js/cysec.js');
+                } else if (sectionName === 'home') {
+                    loadScript('js/home.js')
                 }
 
             })
