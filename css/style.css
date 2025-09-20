@@ -378,6 +378,25 @@ footer {
   z-index: 1;
 }
 
+.CTA {
+    padding: 15px;
+    border-style: none;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.card-container button {
+    padding: 15px;
+    border-style: none;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.card-container button:hover, .CTA:hover {
+    background-color: #05d7e5;
+    color: white;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .nav-container {
