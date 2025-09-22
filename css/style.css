@@ -91,7 +91,7 @@ body {
 .main-header {
     background-color: var(--bg-color);
     padding: 40px 20px 15px;
-    text-align: left;
+    text-align: center;
     margin-top: 30px;
     animation: fadeRight 1.5s ease-out forwards;
 }

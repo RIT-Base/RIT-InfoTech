@@ -1,22 +1,31 @@
 <div id="gamedev-content">
     <h2>Divisi GameDev</h2>
-    <p>Divisi Game Development (Game Dev) adalah salah satu cabang divisi minat dan sekaligus team produksi dalam Unit Kegiatan Mahasiswa Republic Of Information And Technology (UKM RIT). sesuai dengan namanya divisi kami fokus dalam minat pengembangan game, metode pengembangan minat yang diterapkan saat ini adalah dengan penerapan secara langsung pada proyek.</p>
-</div>
-<h2>Coba Game Sederhana Kami:</h2>
-<div id="gamedev">
-    <div class="game-controls">
-        <button id="playBtn">Play</button>
-        <button id="stopBtn">Stop</button>
-    </div>
-    <canvas id="gameCanvas" width="400" height="150"></canvas>
-    <div class="game-controls">
-        <button id="jumpBtn">Jump</button>
-    </div>
-</div>
-<h2>Ingin Tahu Cara Membuatnya?</h2>
-<p>Di divisi GameDev, kami mengupas tuntas proses pembuatan game dari konsep, desain, hingga coding menggunakan engine seperti Unity atau Godot. Ayo wujudkan dunia imajinasimu menjadi game!</p>
-<div style="text-align: center;">
-    <button class="CTA">Cari Tahu Lebih Lanjut !</button>
-</div>    
-<h2>Karya Kami:</h2>
+    <p> Divisi Game Development adalah salah satu divisi dalam organisasi RIT yang berfokus pada pengembangan game. 
+        Divisi ini menjadi wadah bagi mahasiswa yang memiliki minat di bidang game untuk belajar bersama, memahami proses pembuatan game dari berbagai aspek, serta mencoba peran-peran yang terlibat di dalamnya. 
+        Game yang dikembangkan pun mencakup seluruh sekup baik Desktop ataupun Mobile.
+    </p>
 
+    <h2>Coba Game Sederhana Kami:</h2>
+    <div id="gamedev" style="display: flex; flex-direction: column; align-items: center;">
+        <canvas id="gameCanvas" width="480" height="320"></canvas>
+        <div id="controls" style="margin-top: 20px; display: flex; gap: 30px; width: 80%; justify-content: center;">
+            <div class="control-group" style="text-align: center;">
+                <label for="speedSlider">Kecepatan Bola</label><br>
+                <input type="range" id="speedSlider" min="1" max="5" value="2" step="0.2">
+            </div>
+            <div class="control-group" style="text-align: center;">
+                <label for="paddleSlider">Lebar Papan</label><br>
+                <input type="range" id="paddleSlider" min="40" max="150" value="75" step="5">
+            </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 0.9em; color: #aaa;">
+            Gerakkan mouse untuk mengontrol papan. Klik untuk memulai ulang.
+        </p>
+    </div>
+    <h2>Ingin Tahu Cara Membuatnya?</h2>
+    <p>Di divisi GameDev, kami mengupas tuntas proses pembuatan game dari konsep, desain, coding, testing, hingga publish menggunakan game engine seperti Unity. Ayo wujudkan dunia imajinasimu menjadi game!</p>
+    <div style="text-align: center;">
+        <button class="CTA">Cari Tahu Lebih Lanjut !</button>
+    </div>    
+    <h2>Karya Kami:</h2>
+</div>

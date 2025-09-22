@@ -1,135 +1,260 @@
 (() => {
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById('gameCanvas');
+    if (!canvas) {
+        console.error("Elemen canvas tidak ditemukan!");
+        return;
+    }
+    const ctx = canvas.getContext('2d');
 
-    const playBtn = document.getElementById("playBtn");
-    const stopBtn = document.getElementById("stopBtn");
-    const jumpBtn = document.getElementById("jumpBtn");
+    const hitPaddleSound = new Audio('audio/papan.mp3');
+    const hitBrickSound = new Audio('audio/kotak.mp3');
+    const loseLifeSound = new Audio('audio/chance.mp3');
 
-    let isRunning = false;
-    let animationFrame;
-    let obstacles = [];
-    let frameCount = 0;
+    // --- Parameter & Variabel Game ---
+    let ballRadius = 10;
+    let x, y, dx, dy;
+
+    let paddleHeight = 10;
+    let paddleWidth = 75;
+    let paddleX;
+
+    // BARU: State untuk menandai apakah mouse/jari sedang menekan layar
+    let isPaddleActive = false;
+
     let score = 0;
+    let lives = 3;
+    let gameOver = false;
+    let gameWon = false;
+    let gameStarted = false;
 
-    const player = {
-        x: 50,
-        y: 130,
-        width: 20,
-        height: 20,
-        color: "blue",
-        velocityY: 0,
-        gravity: 0.5,
-        jumpPower: -8,
-        isJumping: false
-    };
+    let bricks = [];
+    const brickRowCount = 4;
+    const brickColumnCount = 6;
+    const brickWidth = 65;
+    const brickHeight = 20;
+    const brickPadding = 10;
+    const brickOffsetTop = 30;
+    const brickOffsetLeft = 30;
 
-    function drawPlayer() {
-        ctx.fillStyle = player.color;
-        ctx.fillRect(player.x, player.y, player.width, player.height);
+    // --- Inisialisasi & Reset Game ---
+    function initGame() {
+        score = 0;
+        gameOver = false;
+        gameWon = false;
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        
+        let speedMultiplier = parseFloat(document.getElementById('speedSlider').value);
+        dx = speedMultiplier;
+        dy = -speedMultiplier;
+        
+        paddleWidth = parseInt(document.getElementById('paddleSlider').value);
+        paddleX = (canvas.width - paddleWidth) / 2;
+        
+        createBricks();
     }
 
-    function spawnObstacle() {
-        obstacles.push({
-            x: canvas.width,
-            y: canvas.height - 20,
-            width: 20,
-            height: 20,
-            color: "red",
-            speed: 3
-        });
+    function resetGame() {
+        if (gameOver || gameWon) {
+            lives = 3;
+            gameStarted = true;
+            initGame();
+            draw();
+        }
     }
 
-    function drawObstacles() {
-        obstacles.forEach(obs => {
-            ctx.fillStyle = obs.color;
-            ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-        });
-    }
-
-    function updateObstacles() {
-        obstacles.forEach(obs => {
-            obs.x -= obs.speed;
-        });
-        obstacles = obstacles.filter(obs => obs.x + obs.width > 0);
-    }
-
-    function checkCollision() {
-        for (let obs of obstacles) {
-            if (
-                player.x < obs.x + obs.width &&
-                player.x + player.width > obs.x &&
-                player.y < obs.y + obs.height &&
-                player.y + player.height > obs.y
-            ) {
-                isRunning = false;
-                cancelAnimationFrame(animationFrame);
-                alert(`Game Over! Score: ${score}`);
-                return true;
+    function createBricks() {
+        bricks = [];
+        for (let c = 0; c < brickColumnCount; c++) {
+            bricks[c] = [];
+            for (let r = 0; r < brickRowCount; r++) {
+                bricks[c][r] = { x: 0, y: 0, status: 1 };
             }
         }
-        return false;
     }
 
-    function update() {
+    // --- Fungsi Menggambar ---
+    function drawStartScreen() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Gravity + floor
-        player.y += player.velocityY;
-        if (player.y + player.height < canvas.height) {
-            player.velocityY += player.gravity;
-        } else {
-            player.y = canvas.height - player.height;
-            player.velocityY = 0;
-            player.isJumping = false;
-        }
-
-        // Obstacles
-        if (frameCount % 100 === 0) {
-            spawnObstacle();
-        }
-        updateObstacles();
-
-        // Draw
-        drawPlayer();
-        drawObstacles();
-
-        // Score
-        score++;
+        ctx.font = "30px Arial";
         ctx.fillStyle = "black";
-        ctx.font = "14px monospace";
-        ctx.fillText(`Score: ${score}`, 10, 20);
+        ctx.textAlign = "center";
+        ctx.fillText("Klik untuk Mulai", canvas.width / 2, canvas.height / 2);
+    }
+    
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
 
-        // Collision
-        if (!checkCollision() && isRunning) {
-            frameCount++;
-            animationFrame = requestAnimationFrame(update);
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawBricks() {
+        for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = 0; r < brickRowCount; r++) {
+                if (bricks[c][r].status === 1) {
+                    let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                    let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = `hsl(${c * 60}, 100%, 50%)`;
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
         }
     }
 
-    function jump() {
-        if (!player.isJumping) {
-            player.velocityY = player.jumpPower;
-            player.isJumping = true;
+    function drawUI() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "left";
+        ctx.fillText("Score: " + score, 8, 20);
+        ctx.fillText("Nyawa: " + lives, canvas.width - 75, 20);
+    }
+
+    // --- Logika Game ---
+    function collisionDetection() {
+        for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = 0; r < brickRowCount; r++) {
+                let b = bricks[c][r];
+                if (b.status === 1) {
+                    if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                        dy = -dy;
+                        b.status = 0;
+                        score++;
+                        hitBrickSound.play();
+                        if (score === brickRowCount * brickColumnCount) {
+                            gameWon = true;
+                        }
+                    }
+                }
+            }
         }
     }
 
-    playBtn.addEventListener("click", () => {
-        if (!isRunning) {
-            // Reset game
-            isRunning = true;
-            obstacles = [];
-            frameCount = 0;
-            score = 0;
-            player.y = canvas.height - player.height;
-            update();
+    function draw() {
+        if (!gameStarted || gameOver || gameWon) {
+             if (gameOver || gameWon) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = "30px Arial";
+                ctx.fillStyle = "white";
+                ctx.textAlign = "center";
+                let message = gameWon ? "YOU WIN!" : "GAME OVER";
+                ctx.fillText(message, canvas.width / 2, canvas.height / 2 - 20);
+                ctx.font = "16px Arial";
+                ctx.fillText(`Final Score: ${score}`, canvas.width/2, canvas.height/2 + 10);
+                ctx.fillText("Klik untuk Main Lagi", canvas.width/2, canvas.height/2 + 40);
+            }
+            return;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
+        drawBall();
+        drawPaddle();
+        drawUI();
+        collisionDetection();
+
+        if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+            dx = -dx;
+        }
+        if (y + dy < ballRadius) {
+            dy = -dy;
+        } else if (y + dy > canvas.height - ballRadius) {
+            if (x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy;
+                hitPaddleSound.play();
+            } else {
+                lives--;
+                loseLifeSound.play();
+                if (!lives) {
+                    gameOver = true;
+                } else {
+                    x = canvas.width / 2;
+                    y = canvas.height - 30;
+                    let speedMultiplier = parseFloat(document.getElementById('speedSlider').value);
+                    dx = speedMultiplier;
+                    dy = -speedMultiplier;
+                    paddleX = (canvas.width - paddleWidth) / 2;
+                }
+            }
+        }
+
+        x += dx;
+        y += dy;
+
+        requestAnimationFrame(draw);
+    }
+    
+    // --- Event Listeners ---
+
+    // DIHAPUS: Semua event listener keyboard
+    
+    // BARU: Fungsi untuk meng-handle pergerakan papan
+    function handlePaddleMove(e) {
+        // Cek jika state aktif (mouse ditahan / jari menyentuh)
+        if (isPaddleActive) {
+            let clientX = e.clientX || e.touches[0].clientX;
+            let rect = canvas.getBoundingClientRect();
+            let relativeX = clientX - rect.left;
+            if (relativeX > 0 && relativeX < canvas.width) {
+                paddleX = relativeX - paddleWidth / 2;
+                // Batasi agar papan tidak keluar canvas
+                if (paddleX < 0) paddleX = 0;
+                if (paddleX + paddleWidth > canvas.width) paddleX = canvas.width - paddleWidth;
+            }
+        }
+    }
+    
+    // BARU: Event listener untuk mouse (desktop)
+    canvas.addEventListener("mousedown", () => isPaddleActive = true);
+    canvas.addEventListener("mouseup", () => isPaddleActive = false);
+    canvas.addEventListener("mouseleave", () => isPaddleActive = false); // Jika mouse keluar dari canvas
+    canvas.addEventListener("mousemove", handlePaddleMove);
+
+    // BARU: Event listener untuk sentuhan (mobile)
+    canvas.addEventListener("touchstart", (e) => {
+        isPaddleActive = true;
+        handlePaddleMove(e); // Langsung gerakkan ke posisi awal sentuhan
+    });
+    canvas.addEventListener("touchend", () => isPaddleActive = false);
+    canvas.addEventListener("touchmove", handlePaddleMove);
+
+    document.getElementById('speedSlider').addEventListener('input', (e) => {
+        let speedMultiplier = parseFloat(e.target.value);
+        let currentSpeed = Math.sqrt(dx*dx + dy*dy);
+        if (currentSpeed > 0) {
+           dx = (dx / currentSpeed) * speedMultiplier;
+           dy = (dy / currentSpeed) * speedMultiplier;
         }
     });
 
-    stopBtn.addEventListener("click", () => {
-        isRunning = false;
-        cancelAnimationFrame(animationFrame);
+    document.getElementById('paddleSlider').addEventListener('input', (e) => {
+        paddleWidth = parseInt(e.target.value);
     });
+    
+    canvas.addEventListener("click", () => {
+        if (!gameStarted) {
+            gameStarted = true;
+            initGame();
+            draw();
+        } else if (gameOver || gameWon) {
+            resetGame();
+        }
+    }, { capture: true }); // Menggunakan capture untuk memastikan ini berjalan sebelum event lain jika perlu
 
-    jumpBtn.addEventListener("click", jump);
+    drawStartScreen();
 })();
