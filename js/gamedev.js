@@ -18,7 +18,6 @@
     let paddleWidth = 75;
     let paddleX;
 
-    // BARU: State untuk menandai apakah mouse/jari sedang menekan layar
     let isPaddleActive = false;
 
     let score = 0;
@@ -134,7 +133,10 @@
                         dy = -dy;
                         b.status = 0;
                         score++;
+                        
+                        hitBrickSound.currentTime = 0;
                         hitBrickSound.play();
+
                         if (score === brickRowCount * brickColumnCount) {
                             gameWon = true;
                         }
@@ -200,38 +202,58 @@
     }
     
     // --- Event Listeners ---
-
-    // DIHAPUS: Semua event listener keyboard
     
-    // BARU: Fungsi untuk meng-handle pergerakan papan
     function handlePaddleMove(e) {
-        // Cek jika state aktif (mouse ditahan / jari menyentuh)
         if (isPaddleActive) {
-            let clientX = e.clientX || e.touches[0].clientX;
             let rect = canvas.getBoundingClientRect();
-            let relativeX = clientX - rect.left;
-            if (relativeX > 0 && relativeX < canvas.width) {
-                paddleX = relativeX - paddleWidth / 2;
-                // Batasi agar papan tidak keluar canvas
-                if (paddleX < 0) paddleX = 0;
-                if (paddleX + paddleWidth > canvas.width) paddleX = canvas.width - paddleWidth;
+            let scaleX = canvas.width / rect.width;
+
+            let clientX = e.clientX || e.touches[0].clientX;
+            let canvasX = (clientX - rect.left) * scaleX;
+
+            paddleX = canvasX - paddleWidth / 2;
+
+            if (paddleX < 0) {
+                paddleX = 0;
+            }
+            if (paddleX + paddleWidth > canvas.width) {
+                paddleX = canvas.width - paddleWidth;
             }
         }
     }
     
-    // BARU: Event listener untuk mouse (desktop)
+    // BARU: Fungsi khusus untuk menangani logika mulai dan restart
+    function handleStartOrReset() {
+        if (!gameStarted) {
+            gameStarted = true;
+            initGame();
+            draw();
+        } else if (gameOver || gameWon) {
+            resetGame();
+        }
+    }
+
     canvas.addEventListener("mousedown", () => isPaddleActive = true);
     canvas.addEventListener("mouseup", () => isPaddleActive = false);
-    canvas.addEventListener("mouseleave", () => isPaddleActive = false); // Jika mouse keluar dari canvas
+    canvas.addEventListener("mouseleave", () => isPaddleActive = false);
     canvas.addEventListener("mousemove", handlePaddleMove);
 
-    // BARU: Event listener untuk sentuhan (mobile)
     canvas.addEventListener("touchstart", (e) => {
+        e.preventDefault();
         isPaddleActive = true;
-        handlePaddleMove(e); // Langsung gerakkan ke posisi awal sentuhan
+        handlePaddleMove(e);
     });
-    canvas.addEventListener("touchend", () => isPaddleActive = false);
-    canvas.addEventListener("touchmove", handlePaddleMove);
+
+    // MODIFIKASI: touchend juga memanggil logika start/reset
+    canvas.addEventListener("touchend", () => {
+        isPaddleActive = false;
+        handleStartOrReset(); // Memanggil fungsi start/reset
+    });
+
+    canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        handlePaddleMove(e);
+    });
 
     document.getElementById('speedSlider').addEventListener('input', (e) => {
         let speedMultiplier = parseFloat(e.target.value);
@@ -246,15 +268,8 @@
         paddleWidth = parseInt(e.target.value);
     });
     
-    canvas.addEventListener("click", () => {
-        if (!gameStarted) {
-            gameStarted = true;
-            initGame();
-            draw();
-        } else if (gameOver || gameWon) {
-            resetGame();
-        }
-    }, { capture: true }); // Menggunakan capture untuk memastikan ini berjalan sebelum event lain jika perlu
+    // MODIFIKASI: click sekarang memanggil fungsi yang sama dengan touchend
+    canvas.addEventListener("click", handleStartOrReset);
 
     drawStartScreen();
 })();
