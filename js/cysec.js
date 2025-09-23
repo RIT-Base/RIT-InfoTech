@@ -60,7 +60,7 @@
         terminal.scrollTop = terminal.scrollHeight;
     }});
 
-    const correctAnswer = "RIT{}";
+    const correctAnswer = "RIT{welcome_to_rit_cysec_tryouts}";
 
     const triggerShake = () => {
         answerInput.classList.add("shake");
