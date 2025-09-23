@@ -397,6 +397,120 @@ footer {
     color: white;
 }
 
+.social-links {
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.social-icon {
+    color: white;
+    font-size: 20px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.social-icon:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Tambahkan kode ini ke file style.css Anda */
+
+/* Style umum untuk kedua tombol */
+.community-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    gap: 10px; /* Jarak antara ikon dan teks */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.community-btn:hover {
+    transform: scale(1.05); /* Sedikit membesar saat disentuh mouse */
+}
+
+/* Warna khusus untuk tombol WhatsApp */
+.whatsapp-btn {
+    background-color: #25D366; /* Warna hijau khas WhatsApp */
+}
+
+.whatsapp-btn:hover {
+    background-color: #1DA851; /* Warna hijau sedikit lebih gelap */
+}
+
+/* Warna khusus untuk tombol Discord */
+.discord-btn {
+    background-color: #5865F2; /* Warna "Blurple" khas Discord */
+}
+
+.discord-btn:hover {
+    background-color: #4752C4; /* Warna "Blurple" sedikit lebih gelap */
+}
+/* Anda bisa mengabaikan bagian ini jika sudah ada di CSS Anda */
+.join-community-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    text-align: center;
+}
+
+/* KODE PENTING UNTUK MENENGELAHKAN TOMBOL */
+.social-links {
+    display: flex;
+    justify-content: center; /* Ini yang membuat tombol ke tengah */
+    gap: 20px; /* Jarak antar tombol */
+    margin-top: 15px;
+}
+
+/* Style umum untuk kedua tombol */
+.community-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.community-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Warna khusus untuk tombol WhatsApp */
+.whatsapp-btn {
+    background-color: #25D366;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1DA851;
+}
+
+/* Warna khusus untuk tombol Discord */
+.discord-btn {
+    background-color: #5865F2;
+}
+
+.discord-btn:hover {
+    background-color: #4752C4;
+}
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .nav-container {
