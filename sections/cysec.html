@@ -5,8 +5,26 @@
 
     <h2>//Try the Challenge Below</h2>
 
-    <div id="terminal" style="background:#000; color:#0f0; padding:10px; height:200px; overflow-y:auto; font-family:monospace;">
-        <div>> Welcome to RIT Cyber Terminal <br> Type 'help' for commands.</div>
+    <div id="terminal-wrapper">
+        <div id="terminal">
+            <div>> Welcome to RIT Cyber Terminal <br> Type 'help' for commands.</div>
+        </div>
+        <input id="cmdInput" type="text" placeholder="Type command..." />
     </div>
-    <input id="cmdInput" type="text" style="width:100%; font-family:monospace;" placeholder="Type command..." />
+
+    <h2>//Input the Decoded Message here</h2>
+    <div style="display: flex; gap: 20px;">
+        <input id="answer" type="text" placeholder="RIT{.........}"> 
+        <button id="answerBtn" style="width: 100px; height: 30px;">Enter</button>
+    </div>
+
+    <div id="cy-unlocked" class="hidden" style="animation: fadeUp 1.5s ease-out forwards;">
+        <p>Lorem Ipsum</p>
+    </div>
 </div>
+
+<p style="text-align: center;">
+    <a href="https://skillicons.dev" style="pointer-events: none;">
+        <img src="https://skillicons.dev/icons?i=kali,py,linux,bash" />
+    </a>
+</p>

@@ -1,6 +1,9 @@
 (() => {
     const terminal = document.getElementById('terminal');
     const input = document.getElementById('cmdInput');
+    const answerInput = document.getElementById("answer");
+    const answerBtn = document.getElementById('answerBtn');
+    const cyUnlocked = document.getElementById("cy-unlocked");
 
     const fileContents = {
     'README.txt': 'files/README.txt',
@@ -26,7 +29,7 @@
                     return `cat: ${filename}: ${err.message}`;
                 }
             } else {
-                return `cat: ${filename}: No such file or directory`;
+                return `cat: ${filename}: No such file or directory\nUsage: cat [FILE]`;
             }
         }
     };
@@ -56,4 +59,26 @@
 
         terminal.scrollTop = terminal.scrollHeight;
     }});
+
+    const correctAnswer = "RIT{}";
+
+    const triggerShake = () => {
+        answerInput.classList.add("shake");
+        setTimeout(() => answerInput.classList.remove("shake"), 400);
+    };
+
+    answerBtn.addEventListener("click", () => {
+        const userAnswer = answerInput.value.trim();
+        if (userAnswer === correctAnswer) {
+            cyUnlocked.classList.remove("hidden");
+            cyUnlocked.classList.add("visible");
+            answerInput.style.borderColor = "limegreen"; // optional success
+        } else {
+            triggerShake();
+        }
+    });
+
+    answerInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") answerBtn.click();
+    });
 })();
