@@ -36,6 +36,7 @@
 
     input.addEventListener('keydown', async e => {
     if (e.key === 'Enter') {
+        e.preventDefault();
         const text = input.value.trim();
         terminal.innerHTML += `<div>> ${text}</div>`;
         input.value = '';
@@ -58,6 +59,7 @@
         }
 
         terminal.scrollTop = terminal.scrollHeight;
+        input.focus();
     }});
 
     const correctAnswer = "RIT{welcome_to_rit_cysec_tryouts}";
