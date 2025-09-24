@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Bagian start screen (tidak diubah)
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const mainContent = document.getElementById('main-content');
@@ -15,10 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
+    // Variabel utama
     const navButtons = document.querySelectorAll('.nav-btn');
     const contentWrapper = document.querySelector('.content-wrapper');
     const headerImage = document.getElementById('header-image');
 
+    // Path untuk gambar header
     const imagePaths = {
         'home': 'img/test-image.webp',
         'webdev': 'img/img2.webp',
@@ -27,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'cysec': 'img/img5.webp'
     };
 
-    // ✨ BARU: Path ikon tidak lagi menyertakan 'home'
+    // Path untuk ikon .webp di tombol navigasi
     const iconPaths = {
         'webdev': { active: 'img/webn.webp', inactive: 'img/weba.webp' },
         'gamedev': { active: 'img/gamen.webp', inactive: 'img/gamea.webp' },
@@ -35,21 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
         'cysec': { active: 'img/cysecn.webp', inactive: 'img/cyseca.webp' }
     };
 
+    // Fungsi untuk mengganti gambar header
     const switchSection = (targetSectionId) => {
         headerImage.classList.add('is-loading');
         setTimeout(() => {
-            headerImage.src = imagePaths[targetSectionId];
+            if (imagePaths[targetSectionId]) {
+                headerImage.src = imagePaths[targetSectionId];
+            }
             headerImage.classList.remove('is-loading');
         }, 100);
     };
-
+    
+    // Fungsi untuk memuat script eksternal
     const loadScript = (scriptUrl) => {
+        // Hapus script lama jika ada untuk menghindari duplikasi
+        const oldScript = document.querySelector(`script[src="${scriptUrl}"]`);
+        if (oldScript) {
+            oldScript.remove();
+        }
+        // Buat dan tambahkan script baru
         const script = document.createElement('script');
         script.src = scriptUrl;
         script.async = true;
         document.body.appendChild(script);
     };
 
+    // Fungsi untuk memuat konten section dari file HTML
     const loadSection = (sectionName) => {
         fetch(`sections/${sectionName}.html`)
             .then(response => {
@@ -57,37 +71,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.text();
             })
             .then(htmlContent => {
-                contentWrapper.innerHTML = '';
-                const newSection = document.createElement('section');
-                newSection.id = sectionName;
-                newSection.className = 'content-section visible';
-                newSection.innerHTML = htmlContent;
-                contentWrapper.appendChild(newSection);
-
-                if (sectionName === 'webdev') loadScript('js/webdev.js');
-                else if (sectionName === 'gamedev') loadScript('js/gamedev.js');
-                else if (sectionName === 'iot') loadScript('js/iot.js');
-                else if (sectionName === 'cysec') loadScript('js/cysec.js');
-                else if (sectionName === 'home') loadScript('js/home.js');
+                contentWrapper.innerHTML = htmlContent;
+                // Memuat script spesifik setelah konten berhasil dimuat
+                const scripts = {
+                    'webdev': 'js/webdev.js',
+                    'gamedev': 'js/gamedev.js',
+                    'iot': 'js/iot.js',
+                    'cysec': 'js/cysec.js',
+                    'home': 'js/home.js'
+                };
+                if (scripts[sectionName]) {
+                    loadScript(scripts[sectionName]);
+                }
             })
             .catch(error => {
                 console.error('Error loading section:', error);
-                contentWrapper.innerHTML = `<section class="content-section visible"><h2>Error</h2><p>Failed to load content. Please try again later.</p></section>`;
+                contentWrapper.innerHTML = `<section class="content-section visible"><h2>Error</h2><p>Gagal memuat konten. Silakan coba lagi nanti.</p></section>`;
             });
     };
 
-    // ✨ DIPERBARUI: Event listener dengan kondisi untuk mengabaikan 'home'
+    // Event listener untuk setiap tombol navigasi
     navButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             const clickedButton = e.currentTarget;
             const sectionId = clickedButton.dataset.section;
 
-            // Reset semua tombol ke status tidak aktif
+            // 1. Reset semua tombol ke status tidak aktif
             navButtons.forEach(btn => {
                 btn.classList.remove('active');
                 const btnSection = btn.dataset.section;
 
-                // Hanya ubah gambar jika BUKAN tombol home
+                // Hanya ubah gambar jika BUKAN tombol 'home'
                 if (btnSection !== 'home') {
                     const icon = btn.querySelector('img');
                     if (icon && iconPaths[btnSection]) {
@@ -96,10 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Atur tombol yang diklik menjadi aktif
+            // 2. Atur tombol yang diklik menjadi aktif
             clickedButton.classList.add('active');
-
-            // Hanya ubah gambar jika tombol yang diklik BUKAN home
+            // Hanya ubah gambar jika tombol yang diklik BUKAN 'home'
             if (sectionId !== 'home') {
                 const clickedIcon = clickedButton.querySelector('img');
                 if (clickedIcon && iconPaths[sectionId]) {
@@ -107,14 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // 3. Muat konten dan ganti gambar header
             loadSection(sectionId);
             switchSection(sectionId);
-
-            if (window.innerWidth <= 600) {
-                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
-            }
         });
     });
 
+    // Muat section 'home' saat halaman pertama kali dibuka
     loadSection('home');
 });
