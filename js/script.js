@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the start button and both screen containers
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const mainContent = document.getElementById('main-content');
     const footer = document.querySelector('footer');
 
-    // Add a click event listener to the start button
     startBtn.addEventListener('click', () => {
         startScreen.style.opacity = '0';
         setTimeout(() => {
@@ -17,12 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    // Get all navigation buttons and all content sections
     const navButtons = document.querySelectorAll('.nav-btn');
-    const contentWrapper = document.querySelector('.content-wrapper'); // used for section injection
+    const contentWrapper = document.querySelector('.content-wrapper');
     const headerImage = document.getElementById('header-image');
 
-    // Define the image paths for each section
     const imagePaths = {
         'home': 'img/test-image.webp',
         'webdev': 'img/img2.webp',
@@ -31,14 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
         'cysec': 'img/img5.webp'
     };
 
-    // Function to handle the tab switching
+    // ✨ BARU: Path ikon tidak lagi menyertakan 'home'
+    const iconPaths = {
+        'webdev': { active: 'img/webn.webp', inactive: 'img/weba.webp' },
+        'gamedev': { active: 'img/gamen.webp', inactive: 'img/gamea.webp' },
+        'iot': { active: 'img/iotn.webp', inactive: 'img/iota.webp' },
+        'cysec': { active: 'img/cysecn.webp', inactive: 'img/cyseca.webp' }
+    };
+
     const switchSection = (targetSectionId) => {
-        const sections = contentWrapper.querySelectorAll('.content-section');
-        sections.forEach(section => section.classList.remove('visible'));
-
-        const targetSection = document.getElementById(targetSectionId);
-        if (targetSection) targetSection.classList.add('visible');
-
         headerImage.classList.add('is-loading');
         setTimeout(() => {
             headerImage.src = imagePaths[targetSectionId];
@@ -46,15 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     };
 
-    // Function to load a script dynamically (Option A)
     const loadScript = (scriptUrl) => {
         const script = document.createElement('script');
         script.src = scriptUrl;
-        script.async = true; // allows multiple loads safely
+        script.async = true;
         document.body.appendChild(script);
     };
 
-    // Function to load a section
     const loadSection = (sectionName) => {
         fetch(`sections/${sectionName}.html`)
             .then(response => {
@@ -68,20 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 newSection.className = 'content-section visible';
                 newSection.innerHTML = htmlContent;
                 contentWrapper.appendChild(newSection);
-                newSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-                if (sectionName === 'webdev') {
-                    loadScript('js/webdev.js');
-                } else if (sectionName === 'gamedev') {
-                    loadScript('js/gamedev.js');
-                } else if (sectionName === 'iot') {
-                    loadScript('js/iot.js');
-                } else if (sectionName === 'cysec') {
-                    loadScript('js/cysec.js');
-                } else if (sectionName === 'home') {
-                    loadScript('js/home.js')
-                }
-
+                if (sectionName === 'webdev') loadScript('js/webdev.js');
+                else if (sectionName === 'gamedev') loadScript('js/gamedev.js');
+                else if (sectionName === 'iot') loadScript('js/iot.js');
+                else if (sectionName === 'cysec') loadScript('js/cysec.js');
+                else if (sectionName === 'home') loadScript('js/home.js');
             })
             .catch(error => {
                 console.error('Error loading section:', error);
@@ -89,22 +76,45 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // Add click events to nav buttons
+    // ✨ DIPERBARUI: Event listener dengan kondisi untuk mengabaikan 'home'
     navButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const sectionId = button.getAttribute('data-section');
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+            const clickedButton = e.currentTarget;
+            const sectionId = clickedButton.dataset.section;
+
+            // Reset semua tombol ke status tidak aktif
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                const btnSection = btn.dataset.section;
+
+                // Hanya ubah gambar jika BUKAN tombol home
+                if (btnSection !== 'home') {
+                    const icon = btn.querySelector('img');
+                    if (icon && iconPaths[btnSection]) {
+                        icon.src = iconPaths[btnSection].inactive;
+                    }
+                }
+            });
+
+            // Atur tombol yang diklik menjadi aktif
+            clickedButton.classList.add('active');
+
+            // Hanya ubah gambar jika tombol yang diklik BUKAN home
+            if (sectionId !== 'home') {
+                const clickedIcon = clickedButton.querySelector('img');
+                if (clickedIcon && iconPaths[sectionId]) {
+                    clickedIcon.src = iconPaths[sectionId].active;
+                }
+            }
+
             loadSection(sectionId);
             switchSection(sectionId);
 
-            // Optional: smooth scroll for mobile
             if (window.innerWidth <= 600) {
                 document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
 
-    // Auto-load home section on start
     loadSection('home');
 });

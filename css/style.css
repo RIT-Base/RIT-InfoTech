@@ -553,6 +553,10 @@ footer {
         height: 50px;
         margin: 5px;
     }
+    .img-btn {
+        width: 20px;
+        height: 20px;
+    }
     .nav-btn span {
         font-size: 0.4rem;
     }
