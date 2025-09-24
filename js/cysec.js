@@ -79,8 +79,4 @@
             triggerShake();
         }
     });
-
-    answerInput.addEventListener("keypress", e => {
-        if (e.key === "Enter") answerBtn.click();
-    });
 })();
